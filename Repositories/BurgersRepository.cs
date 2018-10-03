@@ -42,8 +42,8 @@ namespace burgershack.Repository
         public Burger Update(Burger burger)
         {
             _db.Execute(@"
-            UPDATE burgers SET (name, description, price) 
-            VALUES (@Name, @Description, @Price)
+            UPDATE burgers 
+            SET name = @Name, description = @Description, price = @Price
             WHERE id = @Id
             ", burger);
             return burger;
@@ -56,7 +56,7 @@ namespace burgershack.Repository
         }
         public int Delete(int id)
         {
-            return _db.Execute("DELETE FROM burgers WHERE id = @id", new { id });
+            return _db.Execute("DELETE FROM burgers WHERE id = @Id", new { id });
         }
     }
 }

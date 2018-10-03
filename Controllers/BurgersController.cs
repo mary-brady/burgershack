@@ -31,5 +31,16 @@ namespace burgershack.Controllers
             }
             throw new Exception("Invalid burg!");
         }
+        [HttpPut]
+        public Burger Put([FromBody] Burger burger)
+        {
+            return _repo.Update(burger);
+        }
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _repo.Delete(id);
+        }
     }
+
 }

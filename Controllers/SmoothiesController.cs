@@ -31,5 +31,17 @@ namespace burgershack.Controllers
             }
             throw new Exception("Invalid smoothie!");
         }
+
+        [HttpPut]
+        public Smoothie Put([FromBody] Smoothie smoothie)
+        {
+            return _repo.Update(smoothie);
+        }
+        [HttpDelete("{id}")]
+        public string Delete(int id)
+        {
+            _repo.Delete(id);
+            return "Smoothie delorted!";
+        }
     }
 }

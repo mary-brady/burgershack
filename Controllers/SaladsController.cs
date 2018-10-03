@@ -31,5 +31,17 @@ namespace burgershack.Controllers
             }
             throw new Exception("Invalid salad!");
         }
+
+        [HttpPut]
+        public Salad Put([FromBody] Salad salad)
+        {
+            return _repo.Update(salad);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _repo.Delete(id);
+        }
     }
 }
