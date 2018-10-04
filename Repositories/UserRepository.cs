@@ -11,13 +11,12 @@ namespace burgershack.Repository
     {
 
         IDbConnection _db;
-        //REGISTER - create
-        SaltRevision SALT = SaltRevision.Revision2X;
+        //REGISTER - create;
         public User Register(UserRegsistration creds)
         {
             //generate userId
             //hash the pass
-            string hash = BCrypt.Net.BCrypt.HashPassword(creds.Password, SALT);
+            string hash = BCrypt.Net.BCrypt.HashPassword(creds.Password);
             string id = Guid.NewGuid().ToString();
 
             int success = _db.Execute(@"
@@ -42,27 +41,27 @@ namespace burgershack.Repository
             };
         }
 
+        //LOGIN - read
         public User Login(UserLogin creds)
         {
             User user = _db.Query<User>(@"
            SELECT * from users WHERE email = @Email
            ", creds).FirstOrDefault();
+            if (user == null) { return null; }
 
             bool validPass = BCrypt.Net.BCrypt.Verify(creds.Password, user.Hash);
+
             if (!validPass) { return null; }
+            user.Hash = null;
             return user;
+        }
+        public UserRepository(IDbConnection db)
+        {
+            _db = db;
         }
     }
 
-    //LOGIN - read
     //UPDATE - update
     //CHANGE PASSWORD - update (special u)
     //DELETE - Delete
-
-
-    public UserRepository(IDbConnection db)
-    {
-        _db = db;
-    }
-}
 }
