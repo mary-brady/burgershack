@@ -3,23 +3,42 @@ using System.ComponentModel.DataAnnotations;
 
 namespace burgershack.Models
 {
-    public class User
+    public class UserLogin //Helper Model - info needed to actually create a user & keep password in user class Private
     {
-        public Guid Id { get; private set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
+    }
+
+    public class UserRegsistration
+    {
         [Required]
         public string Username { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         [MinLength(6)]
-        private string Password { get; set; }
+        public string Password { get; set; }
+    }
+    public class User
+    {
+        public Guid Id { get; private set; }
+        public string Username { get; set; }
+
+        [Required]
+        internal string Hash { get; set; }
 
         [EmailAddress]
         [Required]
         public string Email { get; set; }
+        public bool Active { get; set; } = true;
 
-        public User()
-        {
-            new User() { };
-        }
     }
 }
