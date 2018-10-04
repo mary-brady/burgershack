@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace burgershack.Models
 {
@@ -38,7 +40,19 @@ namespace burgershack.Models
         [EmailAddress]
         [Required]
         public string Email { get; set; }
+
+        public ClaimsPrincipal _principal { get; private set; }
         public bool Active { get; set; } = true;
 
+        internal void SetClaims()
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Name, Id)
+            };
+            var userIdentity = new ClaimsIdentity(claims, "login");
+            _principal = new ClaimsPrincipal(userIdentity);
+        }
     }
 }

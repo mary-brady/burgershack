@@ -55,6 +55,19 @@ namespace burgershack.Repository
             user.Hash = null;
             return user;
         }
+
+        internal User GetUserById(string id)
+        {
+            var user = _db.Query<User>(@"
+            SELECT * FROM users WHERE id = @id
+            ", new { id }).FirstOrDefault();
+            if (user != null)
+            {
+                user.Hash = null;
+            }
+            return user;
+        }
+
         public UserRepository(IDbConnection db)
         {
             _db = db;
