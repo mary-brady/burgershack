@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using burgershack.Models;
 using burgershack.Repository;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace burgershack.Controllers
@@ -39,7 +40,7 @@ namespace burgershack.Controllers
             await HttpContext.SignOutAsync();
             return true;
         }
-
+        [Authorize]
         [HttpGet("Authenticate")]
         public User Authenticate()
         {
