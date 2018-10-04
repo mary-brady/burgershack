@@ -29,7 +29,7 @@ namespace burgershack.Models
     }
     public class User
     {
-        public Guid Id { get; private set; }
+        public string Id { get; set; }
         public string Username { get; set; }
 
         [Required]
