@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using burgershack.Models;
 using burgershack.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace burgershack.Controllers
